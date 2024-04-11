@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f917440-40fc-4377-b4fa-80eb8d1270be" name="Changes" comment="Initial commit.">
-      <change afterPath="$PROJECT_DIR$/pets_listing/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pets_listing/urls.py" afterDir="false" />
+    <list default="true" id="6f917440-40fc-4377-b4fa-80eb8d1270be" name="Changes" comment="Create pets_listing app&#10;&#10;Create new app, edit urls.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pet_adoption_website/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/pet_adoption_website/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pet_adoption_website/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/pet_adoption_website/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pets_listing/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/pets_listing/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +38,8 @@
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
@@ -90,8 +89,17 @@
       <option name="presentableId" value="Default" />
       <updated>1712836341569</updated>
       <workItem from="1712836349206" duration="1000" />
-      <workItem from="1712837846173" duration="299000" />
+      <workItem from="1712837846173" duration="663000" />
     </task>
+    <task id="LOCAL-00001" summary="Create pets_listing app&#10;&#10;Create new app, edit urls.">
+      <option name="closed" value="true" />
+      <created>1712838302683</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712838302683</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,5 +115,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Create pets_listing app&#10;&#10;Create new app, edit urls." />
+    <option name="LAST_COMMIT_MESSAGE" value="Create pets_listing app&#10;&#10;Create new app, edit urls." />
   </component>
 </project>
