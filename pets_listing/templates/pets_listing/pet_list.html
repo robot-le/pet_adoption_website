@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Pet List</h1>
+
+    {% if pet_list %}
+        <ul>
+
+            {% for pet in pet_list %}
+                <li>
+                    <a href="{{ pet.get_absolute_url }}">{{ pet.name }}</a> ({{ pet.profile_creator.username }})
+                </li>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>There are no pets.</p>
+    {% endif %}
+{% endblock %}

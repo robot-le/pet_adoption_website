@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Title: {{ pet.name }}</h1>
+
+    <p><strong>Owner:</strong> {{ pet.profile_creator.username }}</p>
+    <p><strong>Description:</strong> {{ pet.description }}</p>
+
+{% endblock %}
