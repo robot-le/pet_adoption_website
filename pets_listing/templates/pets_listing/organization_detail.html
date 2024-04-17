@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Name: {{ organization.name }}</h1>
+
+    <p><strong>Description:</strong> {{ organization.description }}</p>
+    <p><strong>City:</strong> {{ organization.city }}</p>
+    <p><strong>Address:</strong> {{ organization.address }}</p>
+    <p><strong>Phone:</strong> {{ organization.phone }}</p>
+    <p><strong>Owner:</strong> {{ organization.owner.username }}</p>
+
+{% endblock %}
