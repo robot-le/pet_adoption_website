@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Title: {{ pet.name }}</h1>
+    <h1>Name: {{ pet.name }}</h1>
 
-    <p><strong>Owner:</strong> {{ pet.profile_creator.username }}</p>
     <p><strong>Description:</strong> {{ pet.description }}</p>
+    <p><strong>Age:</strong> {{ pet.calculate_age }}</p>
+    <p><strong>Breed:</strong> {{ pet.breed }}</p>
+    <p><strong>City:</strong> {{ pet.city }}</p>
+    <p><strong>Owner:</strong> {{ pet.profile_creator.username }}</p>
+    <p><strong>Organization:</strong> {{ pet.organization.name }}</p>
 
 {% endblock %}

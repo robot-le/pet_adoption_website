@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f917440-40fc-4377-b4fa-80eb8d1270be" name="Changes" comment="Create models, register models in admin.py">
-      <change afterPath="$PROJECT_DIR$/pets_listing/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pets_listing/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pet_adoption_website/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/pet_adoption_website/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pets_listing/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/pets_listing/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pets_listing/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/pets_listing/views.py" afterDir="false" />
+    <list default="true" id="6f917440-40fc-4377-b4fa-80eb8d1270be" name="Changes" comment="Add list view and detail view">
+      <change beforePath="$PROJECT_DIR$/pet_adoption_website/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/pet_adoption_website/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pets_listing/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/pets_listing/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pets_listing/templates/pets_listing/pet_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/pets_listing/templates/pets_listing/pet_detail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,9 +38,10 @@
     "Django Server.pet_adoption_website.executor": "Run",
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "django.template.preview.state": "SHOW_EDITOR",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/nasa/dev/pet_adoption_pyramid",
+    "last_opened_file_path": "/home/nasa/dev/72_sitewomen/sitewomen",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -103,6 +101,7 @@
       <workItem from="1712837846173" duration="663000" />
       <workItem from="1712845720571" duration="12384000" />
       <workItem from="1712915716239" duration="1506000" />
+      <workItem from="1712943257665" duration="5558000" />
     </task>
     <task id="LOCAL-00001" summary="Create pets_listing app&#10;&#10;Create new app, edit urls.">
       <option name="closed" value="true" />
@@ -120,7 +119,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712861998553</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add list view and detail view">
+      <option name="closed" value="true" />
+      <created>1712945601807</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712945601807</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,6 +147,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create pets_listing app&#10;&#10;Create new app, edit urls." />
     <MESSAGE value="Create models, register models in admin.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create models, register models in admin.py" />
+    <MESSAGE value="Add list view and detail view" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add list view and detail view" />
   </component>
 </project>

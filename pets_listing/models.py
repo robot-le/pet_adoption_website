@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
 from django.contrib.auth.models import User
 
 
@@ -38,6 +39,23 @@ class Pet(models.Model):
 
     def get_absolute_url(self):
         return reverse('pet-detail', kwargs={'pk': self.pk})
+
+    # def calculate_age(self):
+    #     today = date.today()
+    #     age = today - self.birth_date
+    #     return type(self.birth_date)
+
+    def calculate_age(self):
+        today = date.today()
+        bd = self.birth_date
+        years = today.year - bd.year - ((today.month, today.day) < (bd.month, bd.day))
+        months = (today.month - bd.month) % 12
+        if today.day < bd.day:
+            months -= 1
+        if months < 0:
+            months += 12
+            years -= 1
+        return years, months
 
 
 # class Media(models.Model):
