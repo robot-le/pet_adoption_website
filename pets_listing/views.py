@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from .models import (
-    Pet,
+    Pet, Organization,
 )
 
 
@@ -16,3 +16,12 @@ class PetListView(generic.ListView):
 
 class PetDetailView(generic.DetailView):
     model = Pet
+
+
+class OrganizationListView(generic.ListView):
+    model = Organization
+    paginate_by = 2
+
+
+class OrganizationDetailView(generic.DetailView):
+    model = Organization
