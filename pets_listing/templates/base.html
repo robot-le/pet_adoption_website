@@ -21,10 +21,18 @@
         <div class="col-sm-2">
             {% block sidebar %}
                 <ul class="sidebar-nav">
-                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'pets' %}">All pets</a></li>
                     <li><a href="{% url 'organizations' %}">All organizations</a></li>
-{#                    <li><a href="{% url 'authors' %}">All authors</a></li>#}
+                    {% if user.is_authenticated %}
+                        <li>{{ user.username }}</li>
+                        <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit">Log out</button>
+                        </form>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}">Log in</a></li>
+                    {% endif %}
 {##}
 {#                    <br>#}
 {#                    {% if user.is_authenticated %}#}

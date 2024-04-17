@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    re_path(r'^$', views.index, name='index'),
+    re_path(r'^$', views.home, name='home'),
     re_path(r'pets/', views.PetListView.as_view(), name='pets'),
     re_path(r'^pet/(?P<pk>\d+)$', views.PetDetailView.as_view(), name='pet-detail'),
     re_path(r'^organizations/', views.OrganizationListView.as_view(), name='organizations'),
