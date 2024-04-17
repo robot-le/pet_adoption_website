@@ -24,6 +24,7 @@ class Pet(models.Model):
         related_name='pets',
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     city = models.ForeignKey(
         'City',
@@ -31,6 +32,8 @@ class Pet(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     # media = models.ForeignKey('Media', on_delete=models.PROTECT)
 
@@ -57,6 +60,9 @@ class Pet(models.Model):
             years -= 1
         return years, months
 
+    class Meta:
+        ordering = ['created_at']
+
 
 # class Media(models.Model):
 #     media_file = models.FileField(upload_to='media/')
@@ -80,6 +86,8 @@ class Organization(models.Model):
     address = models.CharField(max_length=250)
     phone = models.CharField(max_length=100)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     # worker = models.ForeignKey(
     #     User,
     #     related_name='organizations',
@@ -92,6 +100,9 @@ class Organization(models.Model):
 
     def get_absolute_url(self):
         return reverse('organization_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['created_at']
 
 
 class City(models.Model):
