@@ -38,7 +38,7 @@ class Pet(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('pet-detail', kwargs={'pk': self.pk})
+        return reverse('pet_detail', kwargs={'pk': self.pk})
 
     # def calculate_age(self):
     #     today = date.today()
@@ -91,7 +91,7 @@ class Organization(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('organization-detail', kwargs={'pk': self.pk})
+        return reverse('organization_detail', kwargs={'pk': self.pk})
 
 
 class City(models.Model):

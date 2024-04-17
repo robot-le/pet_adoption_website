@@ -25,3 +25,13 @@ class OrganizationListView(generic.ListView):
 
 class OrganizationDetailView(generic.DetailView):
     model = Organization
+
+
+class PetCreateView(generic.CreateView):
+    model = Pet
+    fields = '__all__'
+
+
+class OrganizationCreateView(generic.CreateView):
+    model = Organization
+    fields = '__all__'

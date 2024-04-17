@@ -24,6 +24,8 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'pets' %}">All pets</a></li>
                     <li><a href="{% url 'organizations' %}">All organizations</a></li>
+                    <li><a href="{% url 'organization_create' %}">Create organization</a></li>
+                    <li><a href="{% url 'pet_create' %}">Create pet profile</a></li>
                     {% if user.is_authenticated %}
                         <li>{{ user.username }}</li>
                         <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
