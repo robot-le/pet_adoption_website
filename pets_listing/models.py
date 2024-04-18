@@ -1,7 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from datetime import date
-from django.contrib.auth.models import User
 
 
 class Pet(models.Model):
@@ -15,7 +15,7 @@ class Pet(models.Model):
         null=True,
     )
     profile_creator = models.ForeignKey(
-        User,
+        get_user_model(),
         related_name='pets',
         on_delete=models.CASCADE,
     )
@@ -85,11 +85,12 @@ class Organization(models.Model):
     city = models.ForeignKey('City', on_delete=models.PROTECT)
     address = models.CharField(max_length=250)
     phone = models.CharField(max_length=100)
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    # profile_image = models.ImageField()
     # worker = models.ForeignKey(
-    #     User,
+    #     get_user_model(),
     #     related_name='organizations',
     #     on_delete=models.SET_NULL,
     #     null=True,
