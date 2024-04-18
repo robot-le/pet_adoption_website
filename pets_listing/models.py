@@ -13,6 +13,7 @@ class Pet(models.Model):
         related_name='pets',
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     profile_creator = models.ForeignKey(
         get_user_model(),
@@ -49,15 +50,18 @@ class Pet(models.Model):
     #     return type(self.birth_date)
 
     def calculate_age(self):
-        today = date.today()
-        bd = self.birth_date
-        years = today.year - bd.year - ((today.month, today.day) < (bd.month, bd.day))
-        months = (today.month - bd.month) % 12
-        if today.day < bd.day:
-            months -= 1
-        if months < 0:
-            months += 12
-            years -= 1
+        years = 0
+        months = 0
+        if self.birth_date:
+            today = date.today()
+            bd = self.birth_date
+            years = today.year - bd.year - ((today.month, today.day) < (bd.month, bd.day))
+            months = (today.month - bd.month) % 12
+            if today.day < bd.day:
+                months -= 1
+            if months < 0:
+                months += 12
+                years -= 1
         return years, months
 
     class Meta:
@@ -85,7 +89,11 @@ class Organization(models.Model):
     city = models.ForeignKey('City', on_delete=models.PROTECT)
     address = models.CharField(max_length=250)
     phone = models.CharField(max_length=100)
-    owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    owner = models.OneToOneField(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='org',
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # profile_image = models.ImageField()

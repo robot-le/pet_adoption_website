@@ -1,9 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import (
-    Pet, Organization,
+    Pet,
+    Organization,
 )
+from .forms import CreatePetProfileForm, CreateOrganizationForm
 
 
 def home(request):
@@ -28,43 +31,56 @@ class OrganizationDetailView(generic.DetailView):
     model = Organization
 
 
-class PetCreateView(generic.CreateView):
-    model = Pet
-    fields = '__all__'
+class PetCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = CreatePetProfileForm
+    template_name = 'pets_listing/pet_form.html'
     extra_context = {
         'title': 'Create a Pet profile',
     }
 
+    def form_valid(self, form):
+        w = form.save(commit=False)
+        w.profile_creator = self.request.user
+        w.organization = self.request.user.org
+        return super().form_valid(form)
 
-class PetUpdateView(generic.UpdateView):
+
+class PetUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Pet
-    fields = '__all__'
+    form_class = CreatePetProfileForm
+    template_name = 'pets_listing/pet_form.html'
     extra_context = {
         'title': 'Update a Pet profile',
     }
 
 
-class PetDeleteView(generic.DeleteView):
+class PetDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Pet
     success_url = reverse_lazy('pets')
 
 
-class OrganizationCreateView(generic.CreateView):
-    model = Organization
-    fields = '__all__'
+class OrganizationCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = CreateOrganizationForm
+    template_name = 'pets_listing/organization_form.html'
     extra_context = {
         'title': 'Create an Organization',
     }
 
+    def form_valid(self, form):
+        w = form.save(commit=False)
+        w.owner = self.request.user
+        return super().form_valid(form)
 
-class OrganizationUpdateView(generic.UpdateView):
+
+class OrganizationUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Organization
-    fields = '__all__'
+    form_class = CreateOrganizationForm
+    template_name = 'pets_listing/organization_form.html'
     extra_context = {
         'title': 'Update an Organization',
     }
 
 
-class OrganizationDeleteView(generic.DeleteView):
+class OrganizationDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Organization
     success_url = reverse_lazy('organizations')
