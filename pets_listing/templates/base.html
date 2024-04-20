@@ -26,9 +26,10 @@
                     <li><a href="{% url 'organizations' %}">All organizations</a></li>
                     <li><a href="{% url 'organization_create' %}">Create organization</a></li>
                     <li><a href="{% url 'pet_create' %}">Create pet profile</a></li>
+                    <li><a href="{% url 'users:register' %}">Sign up</a></li>
                     {% if user.is_authenticated %}
                         <li>{{ user.username }}</li>
-                        <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                        <form id="logout-form" method="post" action="{% url 'users:logout' %}">
                             {% csrf_token %}
                             <button type="submit">Log out</button>
                         </form>
@@ -61,23 +62,23 @@
         </div>
         <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
 
-{#        {% block pagination %}#}
-{#            {% if is_paginated %}#}
-{#                <div class="pagination">#}
-{#              <span class="page-links">#}
-{#                {% if page_obj.has_previous %}#}
-{#                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>#}
-{#                {% endif %}#}
-{#                  <span class="page-current">#}
-{#                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
-{#                </span>#}
-{#                  {% if page_obj.has_next %}#}
-{#                      <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>#}
-{#                  {% endif %}#}
-{#              </span>#}
-{#                </div>#}
-{#            {% endif %}#}
-{#        {% endblock %}#}
+        {% block pagination %}
+            {% if is_paginated %}
+                <div class="pagination">
+              <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                  <span class="page-current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                  {% if page_obj.has_next %}
+                      <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                  {% endif %}
+              </span>
+                </div>
+            {% endif %}
+        {% endblock %}
 
     </div>
 </div>

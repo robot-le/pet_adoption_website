@@ -1,4 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+)
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -6,7 +10,10 @@ from .models import (
     Pet,
     Organization,
 )
-from .forms import CreatePetProfileForm, CreateOrganizationForm
+from .forms import (
+    CreatePetProfileForm,
+    CreateOrganizationForm,
+)
 
 
 def home(request):
@@ -15,7 +22,7 @@ def home(request):
 
 class PetListView(generic.ListView):
     model = Pet
-    paginate_by = 2
+    paginate_by = 5
 
 
 class PetDetailView(generic.DetailView):
@@ -24,7 +31,7 @@ class PetDetailView(generic.DetailView):
 
 class OrganizationListView(generic.ListView):
     model = Organization
-    paginate_by = 2
+    paginate_by = 5
 
 
 class OrganizationDetailView(generic.DetailView):
@@ -41,7 +48,10 @@ class PetCreateView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         w = form.save(commit=False)
         w.profile_creator = self.request.user
-        w.organization = self.request.user.org
+        try:
+            w.organization = self.request.user.org
+        except get_user_model().org.RelatedObjectDoesNotExist:
+            pass
         return super().form_valid(form)
 
 
