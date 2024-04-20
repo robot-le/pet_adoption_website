@@ -8,7 +8,12 @@
     <p><strong>Breed:</strong> {{ pet.breed }}</p>
     <p><strong>City:</strong> {{ pet.city }}</p>
     <p><strong>Owner:</strong> {{ pet.profile_creator.username }}</p>
-    <p><strong>Organization:</strong> {{ pet.organization.name }}</p>
+    <p>
+        <strong>Organization:</strong> 
+        {% if pet.organization %}
+            <a href="{% url 'organization_detail' pk=pet.organization.pk %}">{{ pet.organization.name }}</a>
+        {% endif %}
+    </p>
     <p><a href="{% url 'pet_update' pk=pet.pk %}">Edit pet profile</a></p>
     <p><a href="{% url 'pet_delete' pk=pet.pk %}">Delete pet profile</a></p>
 

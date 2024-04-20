@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
+    UserPassesTestMixin,
 )
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -55,7 +57,11 @@ class PetCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class PetUpdateView(LoginRequiredMixin, generic.UpdateView):
+class PetUpdateView(
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    generic.UpdateView,
+):
     model = Pet
     form_class = CreatePetProfileForm
     template_name = 'pets_listing/pet_form.html'
@@ -63,34 +69,88 @@ class PetUpdateView(LoginRequiredMixin, generic.UpdateView):
         'title': 'Update a Pet profile',
     }
 
+    def test_func(self):
+        return bool(self.request.user.pets.filter(pk=int(self.kwargs.get('pk'))))
 
-class PetDeleteView(LoginRequiredMixin, generic.DeleteView):
+
+class PetDeleteView(
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    generic.DeleteView,
+):
     model = Pet
     success_url = reverse_lazy('pets')
 
+    def test_func(self):
+        return bool(self.request.user.pets.filter(pk=int(self.kwargs.get('pk'))))
 
-class OrganizationCreateView(LoginRequiredMixin, generic.CreateView):
+
+class OrganizationCreateView(
+    PermissionRequiredMixin,
+    LoginRequiredMixin,
+    generic.CreateView,
+):
     form_class = CreateOrganizationForm
     template_name = 'pets_listing/organization_form.html'
+    permission_required = 'pets_listing.add_organization'
     extra_context = {
         'title': 'Create an Organization',
     }
 
     def form_valid(self, form):
-        w = form.save(commit=False)
-        w.owner = self.request.user
-        return super().form_valid(form)
+        obj = form.save(commit=False)
+        obj.owner = self.request.user
+        self.request.user.user_permissions.remove(
+            Permission.objects.get(codename='add_organization'),
+        )
+        return_value = super().form_valid(form)
+
+        for pet in self.request.user.pets.all():
+            pet.organization = self.request.user.org
+            pet.save()
+
+        return return_value
 
 
-class OrganizationUpdateView(LoginRequiredMixin, generic.UpdateView):
+class OrganizationUpdateView(
+    PermissionRequiredMixin,
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    generic.UpdateView,
+):
     model = Organization
     form_class = CreateOrganizationForm
     template_name = 'pets_listing/organization_form.html'
+    permission_required = 'pets_listing.change_organization'
     extra_context = {
         'title': 'Update an Organization',
     }
 
+    def test_func(self):
+        try:
+            return str(self.request.user.org.pk) == str(self.kwargs.get('pk'))
+        except get_user_model().org.RelatedObjectDoesNotExist:
+            return False
 
-class OrganizationDeleteView(LoginRequiredMixin, generic.DeleteView):
+
+class OrganizationDeleteView(
+    PermissionRequiredMixin,
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    generic.DeleteView,
+):
     model = Organization
+    permission_required = 'pets_listing.delete_organization'
     success_url = reverse_lazy('organizations')
+
+    def test_func(self):
+        try:
+            return str(self.request.user.org.pk) == str(self.kwargs.get('pk'))
+        except get_user_model().org.RelatedObjectDoesNotExist:
+            return False
+
+    def form_valid(self, form):
+        self.request.user.user_permissions.add(
+            Permission.objects.get(codename='add_organization'),
+        )
+        return super().form_valid(form)

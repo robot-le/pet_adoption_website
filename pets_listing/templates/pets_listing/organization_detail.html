@@ -9,6 +9,6 @@
     <p><strong>Phone:</strong> {{ organization.phone }}</p>
     <p><strong>Owner:</strong> {{ organization.owner.username }}</p>
     <p><a href="{% url 'organization_update' pk=organization.pk %}">Edit organization profile</a></p>
-{#    <p><a href="{% url 'organization_delete' pk=organization.pk %}">Delete organization profile</a></p>#}
+    <p><a href="{% url 'organization_delete' pk=organization.pk %}">Delete organization profile</a></p>
 
 {% endblock %}
