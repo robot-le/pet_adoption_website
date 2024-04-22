@@ -1,18 +1,26 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Permission
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
     UserPassesTestMixin,
 )
-from django.shortcuts import render
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404,
+)
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import (
     Pet,
+    Media,
     Organization,
 )
 from .forms import (
+    UploadMediaForm,
     CreatePetProfileForm,
     CreateOrganizationForm,
 )
@@ -40,37 +48,74 @@ class OrganizationDetailView(generic.DetailView):
     model = Organization
 
 
-class PetCreateView(LoginRequiredMixin, generic.CreateView):
-    form_class = CreatePetProfileForm
-    template_name = 'pets_listing/pet_form.html'
-    extra_context = {
-        'title': 'Create a Pet profile',
-    }
+@login_required(login_url='login')
+def pet_create(request):
+    if request.method == 'POST':
+        pet_form = CreatePetProfileForm(request.POST)
+        media_form = UploadMediaForm(request.POST, request.FILES)
+        if pet_form.is_valid() and media_form.is_valid():
+            pet_obj = pet_form.save(commit=False)
+            pet_obj.profile_creator = request.user
+            try:
+                pet_obj.organization = request.user.org
+            except get_user_model().org.RelatedObjectDoesNotExist:
+                pass
+            pet_obj.save()
 
-    def form_valid(self, form):
-        w = form.save(commit=False)
-        w.profile_creator = self.request.user
-        try:
-            w.organization = self.request.user.org
-        except get_user_model().org.RelatedObjectDoesNotExist:
-            pass
-        return super().form_valid(form)
+            files = media_form.cleaned_data['file']
+            for file in files:
+                file_obj = Media(file=file, pet=pet_obj)
+                file_obj.save()
+
+            return redirect('pet_detail', pk=pet_obj.pk)
+    else:
+        pet_form = CreatePetProfileForm()
+        media_form = UploadMediaForm()
+    return render(
+        request,
+        'pets_listing/pet_form.html',
+        {
+            'title': 'Create a Pet profile',
+            'pet_form': pet_form,
+            'media_form': media_form,
+        },
+    )
 
 
-class PetUpdateView(
-    LoginRequiredMixin,
-    UserPassesTestMixin,
-    generic.UpdateView,
-):
-    model = Pet
-    form_class = CreatePetProfileForm
-    template_name = 'pets_listing/pet_form.html'
-    extra_context = {
-        'title': 'Update a Pet profile',
-    }
+@login_required(login_url='login')
+def pet_update(request, pk):
 
-    def test_func(self):
-        return bool(self.request.user.pets.filter(pk=int(self.kwargs.get('pk'))))
+    print()
+
+    if not bool(request.user.pets.filter(pk=int(pk))):
+        raise PermissionDenied
+
+    pet = get_object_or_404(Pet, pk=pk)
+    pet_form = CreatePetProfileForm(instance=pet)
+    media_form = UploadMediaForm(instance=pet)
+
+    if request.method == 'POST':
+        pet_form = CreatePetProfileForm(request.POST, instance=pet)
+        media_form = UploadMediaForm(request.POST, request.FILES, instance=pet)
+
+        if pet_form.is_valid() and media_form.is_valid():
+            pet_obj = pet_form.save()
+
+            files = media_form.cleaned_data['file']
+            for file in files:
+                file_obj = Media(file=file, pet=pet_obj)
+                file_obj.save()
+
+            return redirect('pet_detail', pk=pet_obj.pk)
+    return render(
+        request,
+        'pets_listing/pet_form.html',
+        {
+            'title': 'Create a Pet profile',
+            'pet_form': pet_form,
+            'media_form': media_form,
+        },
+    )
 
 
 class PetDeleteView(

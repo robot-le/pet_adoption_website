@@ -4,8 +4,13 @@
     <h1>{{ title }}</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-error">{{ form.non_field_errors }}</div>
-        {% for f in form %}
+        <div class="form-error">{{ pet_form.non_field_errors }}</div>
+        {% for f in pet_form %}
+            <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <div class="form-error">{{ media_form.non_field_errors }}</div>
+        {% for f in media_form %}
             <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
             <div class="form-error">{{ f.errors }}</div>
         {% endfor %}

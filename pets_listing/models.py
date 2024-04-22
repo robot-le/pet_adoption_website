@@ -36,8 +36,6 @@ class Pet(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # media = models.ForeignKey('Media', on_delete=models.PROTECT)
-
     def __str__(self):
         return self.name
 
@@ -68,12 +66,17 @@ class Pet(models.Model):
         ordering = ['created_at']
 
 
-# class Media(models.Model):
-#     media_file = models.FileField(upload_to='media/')
-#     type = models.CharField(
-#         max_length=5,
-#         choices=(('image', 'Image'), ('video', 'Video'))
-#     )
+class Media(models.Model):
+    file = models.FileField(upload_to='media/')
+    pet = models.ForeignKey(
+        Pet,
+        related_name='media',
+        on_delete=models.CASCADE,
+    )
+    # type = models.CharField(
+    #     max_length=5,
+    #     choices=(('image', 'Image'), ('video', 'Video'))
+    # )
 
 
 class Breed(models.Model):
